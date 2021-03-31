@@ -6,6 +6,8 @@
 #define CSP_SOLVER_VARIABLE_H
 import java.util.ArrayList;
 
+//asdjlkasjk
+
 /**
  * Object representation of a variable.
  */
