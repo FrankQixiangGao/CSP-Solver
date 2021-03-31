@@ -170,33 +170,6 @@ Constraint.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/Constraint.cpp.s
 .PHONY : Constraint.cpp.s
 
-Driver.o: Driver.cpp.o
-
-.PHONY : Driver.o
-
-# target to build an object file
-Driver.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/Driver.cpp.o
-.PHONY : Driver.cpp.o
-
-Driver.i: Driver.cpp.i
-
-.PHONY : Driver.i
-
-# target to preprocess a source file
-Driver.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/Driver.cpp.i
-.PHONY : Driver.cpp.i
-
-Driver.s: Driver.cpp.s
-
-.PHONY : Driver.s
-
-# target to generate assembly for a file
-Driver.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/Driver.cpp.s
-.PHONY : Driver.cpp.s
-
 State.o: State.cpp.o
 
 .PHONY : State.o
@@ -223,6 +196,33 @@ State.s: State.cpp.s
 State.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/State.cpp.s
 .PHONY : State.cpp.s
+
+Variable.o: Variable.cpp.o
+
+.PHONY : Variable.o
+
+# target to build an object file
+Variable.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/Variable.cpp.o
+.PHONY : Variable.cpp.o
+
+Variable.i: Variable.cpp.i
+
+.PHONY : Variable.i
+
+# target to preprocess a source file
+Variable.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/Variable.cpp.i
+.PHONY : Variable.cpp.i
+
+Variable.s: Variable.cpp.s
+
+.PHONY : Variable.s
+
+# target to generate assembly for a file
+Variable.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/Variable.cpp.s
+.PHONY : Variable.cpp.s
 
 main.o: main.cpp.o
 
@@ -263,12 +263,12 @@ help:
 	@echo "... Constraint.o"
 	@echo "... Constraint.i"
 	@echo "... Constraint.s"
-	@echo "... Driver.o"
-	@echo "... Driver.i"
-	@echo "... Driver.s"
 	@echo "... State.o"
 	@echo "... State.i"
 	@echo "... State.s"
+	@echo "... Variable.o"
+	@echo "... Variable.i"
+	@echo "... Variable.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

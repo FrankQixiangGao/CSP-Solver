@@ -4,6 +4,10 @@
 
 #ifndef CSP_SOLVER_STATE_H
 #define CSP_SOLVER_STATE_H
+#include <vector>
+#include <algorithm>
+#include <iostream>
+
 
 import java.util.ArrayList;
 import java.util.Arrays;

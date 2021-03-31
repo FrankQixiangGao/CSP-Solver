@@ -86,16 +86,16 @@
 		<Unit filename="/Users/frankgao/CLionProjects/CSP-Solver/Constraint.h">
 			<Option target="CSP_Solver"/>
 		</Unit>
-		<Unit filename="/Users/frankgao/CLionProjects/CSP-Solver/Driver.cpp">
-			<Option target="CSP_Solver"/>
-		</Unit>
-		<Unit filename="/Users/frankgao/CLionProjects/CSP-Solver/Driver.h">
-			<Option target="CSP_Solver"/>
-		</Unit>
 		<Unit filename="/Users/frankgao/CLionProjects/CSP-Solver/State.cpp">
 			<Option target="CSP_Solver"/>
 		</Unit>
 		<Unit filename="/Users/frankgao/CLionProjects/CSP-Solver/State.h">
+			<Option target="CSP_Solver"/>
+		</Unit>
+		<Unit filename="/Users/frankgao/CLionProjects/CSP-Solver/Variable.cpp">
+			<Option target="CSP_Solver"/>
+		</Unit>
+		<Unit filename="/Users/frankgao/CLionProjects/CSP-Solver/Variable.h">
 			<Option target="CSP_Solver"/>
 		</Unit>
 		<Unit filename="/Users/frankgao/CLionProjects/CSP-Solver/main.cpp">

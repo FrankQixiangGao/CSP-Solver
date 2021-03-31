@@ -103,22 +103,9 @@ CMakeFiles/CSP_Solver.dir/State.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CSP_Solver.dir/State.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/frankgao/CLionProjects/CSP-Solver/State.cpp -o CMakeFiles/CSP_Solver.dir/State.cpp.s
 
-CMakeFiles/CSP_Solver.dir/Driver.cpp.o: CMakeFiles/CSP_Solver.dir/flags.make
-CMakeFiles/CSP_Solver.dir/Driver.cpp.o: ../Driver.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/frankgao/CLionProjects/CSP-Solver/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/CSP_Solver.dir/Driver.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/CSP_Solver.dir/Driver.cpp.o -c /Users/frankgao/CLionProjects/CSP-Solver/Driver.cpp
-
-CMakeFiles/CSP_Solver.dir/Driver.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CSP_Solver.dir/Driver.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/frankgao/CLionProjects/CSP-Solver/Driver.cpp > CMakeFiles/CSP_Solver.dir/Driver.cpp.i
-
-CMakeFiles/CSP_Solver.dir/Driver.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CSP_Solver.dir/Driver.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/frankgao/CLionProjects/CSP-Solver/Driver.cpp -o CMakeFiles/CSP_Solver.dir/Driver.cpp.s
-
 CMakeFiles/CSP_Solver.dir/Constraint.cpp.o: CMakeFiles/CSP_Solver.dir/flags.make
 CMakeFiles/CSP_Solver.dir/Constraint.cpp.o: ../Constraint.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/frankgao/CLionProjects/CSP-Solver/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/CSP_Solver.dir/Constraint.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/frankgao/CLionProjects/CSP-Solver/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/CSP_Solver.dir/Constraint.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/CSP_Solver.dir/Constraint.cpp.o -c /Users/frankgao/CLionProjects/CSP-Solver/Constraint.cpp
 
 CMakeFiles/CSP_Solver.dir/Constraint.cpp.i: cmake_force
@@ -129,20 +116,33 @@ CMakeFiles/CSP_Solver.dir/Constraint.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CSP_Solver.dir/Constraint.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/frankgao/CLionProjects/CSP-Solver/Constraint.cpp -o CMakeFiles/CSP_Solver.dir/Constraint.cpp.s
 
+CMakeFiles/CSP_Solver.dir/Variable.cpp.o: CMakeFiles/CSP_Solver.dir/flags.make
+CMakeFiles/CSP_Solver.dir/Variable.cpp.o: ../Variable.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/frankgao/CLionProjects/CSP-Solver/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/CSP_Solver.dir/Variable.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/CSP_Solver.dir/Variable.cpp.o -c /Users/frankgao/CLionProjects/CSP-Solver/Variable.cpp
+
+CMakeFiles/CSP_Solver.dir/Variable.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CSP_Solver.dir/Variable.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/frankgao/CLionProjects/CSP-Solver/Variable.cpp > CMakeFiles/CSP_Solver.dir/Variable.cpp.i
+
+CMakeFiles/CSP_Solver.dir/Variable.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CSP_Solver.dir/Variable.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/frankgao/CLionProjects/CSP-Solver/Variable.cpp -o CMakeFiles/CSP_Solver.dir/Variable.cpp.s
+
 # Object files for target CSP_Solver
 CSP_Solver_OBJECTS = \
 "CMakeFiles/CSP_Solver.dir/main.cpp.o" \
 "CMakeFiles/CSP_Solver.dir/State.cpp.o" \
-"CMakeFiles/CSP_Solver.dir/Driver.cpp.o" \
-"CMakeFiles/CSP_Solver.dir/Constraint.cpp.o"
+"CMakeFiles/CSP_Solver.dir/Constraint.cpp.o" \
+"CMakeFiles/CSP_Solver.dir/Variable.cpp.o"
 
 # External object files for target CSP_Solver
 CSP_Solver_EXTERNAL_OBJECTS =
 
 CSP_Solver: CMakeFiles/CSP_Solver.dir/main.cpp.o
 CSP_Solver: CMakeFiles/CSP_Solver.dir/State.cpp.o
-CSP_Solver: CMakeFiles/CSP_Solver.dir/Driver.cpp.o
 CSP_Solver: CMakeFiles/CSP_Solver.dir/Constraint.cpp.o
+CSP_Solver: CMakeFiles/CSP_Solver.dir/Variable.cpp.o
 CSP_Solver: CMakeFiles/CSP_Solver.dir/build.make
 CSP_Solver: CMakeFiles/CSP_Solver.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/frankgao/CLionProjects/CSP-Solver/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable CSP_Solver"
