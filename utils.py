@@ -5,7 +5,7 @@ import re
 def get_domains_and_conditions(argv):
     # check the number of command line arguments provided
     if len(argv) != 4:
-        print(f'ERROR: Provided {str(len(argv))} command line argument when expected 3')
+        print(f'ERROR: command line argument expected 3')
         exit()
 
     # regex patterns and variables to extract data from file lines
