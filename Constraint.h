@@ -4,59 +4,57 @@
 
 #ifndef CSP_SOLVER_CONSTRAINT_H
 #define CSP_SOLVER_CONSTRAINT_H
-
+#include "strings.h"
 
 /**
  * Object representation of a constraint.
  */
-public class Constraint {
+class Constraint {
+
+
+private:
     char var1; //First Variable of the constraint
     char var2; //Second Variable of the constraint
-    char operator; //Equality operator of the Variables
+    char opera; //Equality operator of the Variables
 
+public:
     /**
      * Constructor for making a default {@code Constraint}.
      */
-public Constraint() {
+     Constraint() {
         var1 = 'A';
         var2 = 'A';
-        operator = '=';
+        opera = '=';
     }
 
     /**
      * Constructor for making a new {@code Constraint}.
      */
-public Constraint(String input) {
-        var1 = input.charAt(0);
-        var2 = input.charAt(4);
-        operator = input.charAt(2);
+    Constraint(const char* In) {
+        var1 = In[0];
+        opera = In[2];
+        var2 = In[4];
     }
 
     /**
      * Checks to see if a constraint works on a given pair of values
-     * @param val1 value of the first Variable
-     * @param val2 value of the second Variable
+     * @param Value_One value of the first Variable
+     * @param Value_Two value of the second Variable
      * @return true if the pair of values works under the constraint
      */
-public boolean valid(int val1, int val2) {
-        switch (operator) {
+bool valid(int Value_One, int Value_Two) {
+        switch (opera) {
                 case '<':
-                return val1 < val2;
+                return Value_One < Value_Two;
                 case '>':
-                return val1 > val2;
+                return Value_One > Value_Two;
                 case '!':
-                return val1 != val2;
+                return Value_One != Value_Two;
                 case '=':
-                return val1 == val2;
+                return Value_One == Value_Two;
         }
             return false;
-    }
-
-    @Override
-public String toString() {
-        return String.format("%c %c %c", var1, operator, var2);
-    }
-}
+    };
 
 
 #endif //CSP_SOLVER_CONSTRAINT_H

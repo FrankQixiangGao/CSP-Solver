@@ -7,17 +7,21 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
+#include "Variable.h"
 
+using namespace std;
 
-import java.util.ArrayList;
+/** import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashMap; */
 
 /**
  * Holds the constraints and the current values/assignments for the variables.
  */
-public class State {
+
+class State {
+    Vector<variable> vars;
 
     ArrayList<Variable> vars; //Variable objects from input
     ArrayList<Constraint> cons; //Constraint objects from input
@@ -25,10 +29,14 @@ public class State {
     ArrayList<Variable> solvedVars; //Keeps track of the order the Variables are solved in
     boolean useCEP; //true if forward checking is to be used
 
+
+
+
+
     /**
      * Constructor for making a default {@code State}.
      */
-public State() {
+State() {
         this(new ArrayList<>(), new ArrayList<>(), false);
     }
 
@@ -38,7 +46,8 @@ public State() {
      * @param cons List of Constraint Objects
      * @param useCEP true if forward checking is to be used
      */
-public State(ArrayList<Variable> vars, ArrayList<Constraint> cons, boolean useCEP) {
+
+State(ArrayList<Variable> vars, ArrayList<Constraint> cons, boolean useCEP) {
         this.vars = vars;
         this.cons = cons;
         this.useCEP = useCEP;
@@ -50,7 +59,7 @@ public State(ArrayList<Variable> vars, ArrayList<Constraint> cons, boolean useCE
      * Creates a copy of a given state.
      * @return copy of given state
      */
-public State copyOf() {
+State copyOf() {
         State copy = new State();
         for (Variable v : vars) {
             copy.vars.add(v.copyOf());
@@ -68,7 +77,7 @@ public State copyOf() {
      * Checks to see if a given state is a solution
      * @return true if it is a solution
      */
-public boolean isSolved() {
+boolean isSolved() {
         for (Constraint c : cons) {
             //Check if a Variable on a Constraint does not yet have a chosen value
             if (!selected.containsKey(c.var1) || !selected.containsKey(c.var2)) {
