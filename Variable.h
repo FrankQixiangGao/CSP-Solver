@@ -1,72 +1,71 @@
 //
 // Created by Frank Gao on 3/31/21.
 //
+#ifndef AIHW2_VARIABLE_H
+#define AIHW2_VARIABLE_H
 
-#ifndef CSP_SOLVER_VARIABLE_H
-#define CSP_SOLVER_VARIABLE_H
+#include <array>
 
 
-class Variable {
-public:
-    int var;
-    std::vector<int> values;
-    int numConstraints;
+/**
+ * Object representation of a variable.
+ */
+class Variable implements Comparable<Variable> {
 
-    static std::vector<std::string> split(std::string s, std::string const delimiter) {
-        std::vector<std::string> r{};
-        size_t pos = 0;
-        std::string token;
-        while ((pos = s.find(delimiter)) != std::string::npos) {
-            token = s.substr(0, pos);
-            r.push_back(token);
-            s.erase(0, pos + delimiter.length());
+    char var; //Letter which represents the Variable
+    ArrayList<Integer> values; //Valid integer values that the Variable can be
+    int numConstraints; //Total constraints that the Variable is in
+
+/**
+ * Constructor for making a default {@code Variable}.
+ */
+public Variable() {
+    var = 'A';
+    values = new ArrayList<>();
+    numConstraints = 0;
+}
+
+/**
+ * Constructor for making a new {@code Variable}.
+ */
+public Variable(String input) {
+    var = input.charAt(0);
+    values = new ArrayList<>();
+    String[] temp = input.substring(3).split(" ");
+    for(String s:temp) {
+        values.add(Integer.parseInt(s));
+    }
+    }
+
+/**
+ * Determines which Variable is the most constrained, most constraining, and first alphabetically
+ * @param other Variable to compare against
+ * @return positive if current Variable is better than other
+ */
+public int compareTo(Variable other) {
+    if (values.size() == other.values.size()) {
+        if (numConstraints == other.numConstraints) {
+            return var - other.var;
         }
-        return r;
+        return other.numConstraints - numConstraints;
     }
+    return values.size() - other.values.size();
+}
 
-    Variable() :
-            var{'A'},
-            values(),
-            numConstraints{0} {
-    }
+/**
+ * Creates a copy of the given Variable so values don't get lost.
+ * @return copy of a given Variable
+ */
+public Variable copyOf() {
+    Variable copy = new Variable();
+    copy.var = var;
+    copy.values.addAll(values);
+    copy.numConstraints = numConstraints;
+    return copy;
+}
 
-    Variable(std::string const input) {
-        this->var = input.at(0);
-        values = std::vector<int>();
-        std::vector<std::string> temp = split(input.substr(3), " ");
-        for (const auto s : temp) {
-            values.push_back(atoi(s.c_str()));
-        }
-    }
-
-    int compareTo(Variable other) {
-        if (values.size() == other.values.size()) {
-            if (numConstraints == other.numConstraints) {
-                return var - other.var;
-            }
-            return other.numConstraints - numConstraints;
-        }
-        return values.size() - other.values.size();
-    }
-
-    Variable copyOf() {
-        Variable copy;
-        copy.var = this->var;
-        for (const auto &item : this->values) {
-            copy.values.push_back(item);
-        }
-        copy.numConstraints = this->numConstraints;
-        return copy;
-    }
-
-    std::string to_string() const {
-        std::string s = std::to_string(static_cast<char>(var)) + ":";
-        for (const auto &item : values) {
-            s += " " + std::to_string(item);
-        }
-        return s;
-    }
-};
-
-
-#endif //CSP_SOLVER_VARIABLE_H
+@Override
+public String toString() {
+    return String.format("%c: %s", var, values.toString());
+}
+}\

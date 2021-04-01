@@ -68,10 +68,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/frankgao/CLionProjects/CSP-Solver
+CMAKE_SOURCE_DIR = /Users/frankgao/CLionProjects/AIHW2
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/frankgao/CLionProjects/CSP-Solver/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/frankgao/CLionProjects/AIHW2/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -100,9 +100,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/frankgao/CLionProjects/CSP-Solver/cmake-build-debug/CMakeFiles /Users/frankgao/CLionProjects/CSP-Solver/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/frankgao/CLionProjects/AIHW2/cmake-build-debug/CMakeFiles /Users/frankgao/CLionProjects/AIHW2/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/frankgao/CLionProjects/CSP-Solver/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/frankgao/CLionProjects/AIHW2/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -131,44 +131,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named CSP_Solver
+# Target rules for targets named AIHW2
 
 # Build rule for target.
-CSP_Solver: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CSP_Solver
-.PHONY : CSP_Solver
+AIHW2: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 AIHW2
+.PHONY : AIHW2
 
 # fast build rule for target.
-CSP_Solver/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/build
-.PHONY : CSP_Solver/fast
-
-Constraint.o: Constraint.cpp.o
-
-.PHONY : Constraint.o
-
-# target to build an object file
-Constraint.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/Constraint.cpp.o
-.PHONY : Constraint.cpp.o
-
-Constraint.i: Constraint.cpp.i
-
-.PHONY : Constraint.i
-
-# target to preprocess a source file
-Constraint.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/Constraint.cpp.i
-.PHONY : Constraint.cpp.i
-
-Constraint.s: Constraint.cpp.s
-
-.PHONY : Constraint.s
-
-# target to generate assembly for a file
-Constraint.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/Constraint.cpp.s
-.PHONY : Constraint.cpp.s
+AIHW2/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AIHW2.dir/build.make CMakeFiles/AIHW2.dir/build
+.PHONY : AIHW2/fast
 
 State.o: State.cpp.o
 
@@ -176,7 +149,7 @@ State.o: State.cpp.o
 
 # target to build an object file
 State.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/State.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AIHW2.dir/build.make CMakeFiles/AIHW2.dir/State.cpp.o
 .PHONY : State.cpp.o
 
 State.i: State.cpp.i
@@ -185,7 +158,7 @@ State.i: State.cpp.i
 
 # target to preprocess a source file
 State.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/State.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AIHW2.dir/build.make CMakeFiles/AIHW2.dir/State.cpp.i
 .PHONY : State.cpp.i
 
 State.s: State.cpp.s
@@ -194,7 +167,7 @@ State.s: State.cpp.s
 
 # target to generate assembly for a file
 State.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/State.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AIHW2.dir/build.make CMakeFiles/AIHW2.dir/State.cpp.s
 .PHONY : State.cpp.s
 
 Variable.o: Variable.cpp.o
@@ -203,7 +176,7 @@ Variable.o: Variable.cpp.o
 
 # target to build an object file
 Variable.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/Variable.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AIHW2.dir/build.make CMakeFiles/AIHW2.dir/Variable.cpp.o
 .PHONY : Variable.cpp.o
 
 Variable.i: Variable.cpp.i
@@ -212,7 +185,7 @@ Variable.i: Variable.cpp.i
 
 # target to preprocess a source file
 Variable.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/Variable.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AIHW2.dir/build.make CMakeFiles/AIHW2.dir/Variable.cpp.i
 .PHONY : Variable.cpp.i
 
 Variable.s: Variable.cpp.s
@@ -221,8 +194,35 @@ Variable.s: Variable.cpp.s
 
 # target to generate assembly for a file
 Variable.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/Variable.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AIHW2.dir/build.make CMakeFiles/AIHW2.dir/Variable.cpp.s
 .PHONY : Variable.cpp.s
+
+constraint.o: constraint.cpp.o
+
+.PHONY : constraint.o
+
+# target to build an object file
+constraint.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AIHW2.dir/build.make CMakeFiles/AIHW2.dir/constraint.cpp.o
+.PHONY : constraint.cpp.o
+
+constraint.i: constraint.cpp.i
+
+.PHONY : constraint.i
+
+# target to preprocess a source file
+constraint.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AIHW2.dir/build.make CMakeFiles/AIHW2.dir/constraint.cpp.i
+.PHONY : constraint.cpp.i
+
+constraint.s: constraint.cpp.s
+
+.PHONY : constraint.s
+
+# target to generate assembly for a file
+constraint.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AIHW2.dir/build.make CMakeFiles/AIHW2.dir/constraint.cpp.s
+.PHONY : constraint.cpp.s
 
 main.o: main.cpp.o
 
@@ -230,7 +230,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AIHW2.dir/build.make CMakeFiles/AIHW2.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -239,7 +239,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AIHW2.dir/build.make CMakeFiles/AIHW2.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -248,7 +248,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CSP_Solver.dir/build.make CMakeFiles/CSP_Solver.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AIHW2.dir/build.make CMakeFiles/AIHW2.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -259,16 +259,16 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... CSP_Solver"
-	@echo "... Constraint.o"
-	@echo "... Constraint.i"
-	@echo "... Constraint.s"
+	@echo "... AIHW2"
 	@echo "... State.o"
 	@echo "... State.i"
 	@echo "... State.s"
 	@echo "... Variable.o"
 	@echo "... Variable.i"
 	@echo "... Variable.s"
+	@echo "... constraint.o"
+	@echo "... constraint.i"
+	@echo "... constraint.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

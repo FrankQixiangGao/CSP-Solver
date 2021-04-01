@@ -2,26 +2,19 @@
 // Created by Frank Gao on 3/31/21.
 //
 
-#ifndef CSP_SOLVER_STATE_H
-#define CSP_SOLVER_STATE_H
-#include <vector>
-#include <algorithm>
-#include <iostream>
-#include "Variable.h"
+#ifndef AIHW2_STATE_H
+#define AIHW2_STATE_H
 
-using namespace std;
 
-/** import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap; */
+import java.util.HashMap;
 
 /**
  * Holds the constraints and the current values/assignments for the variables.
  */
-
-class State {
-    Vector<Variable> vars;
+public class State {
 
     ArrayList<Variable> vars; //Variable objects from input
     ArrayList<Constraint> cons; //Constraint objects from input
@@ -29,14 +22,10 @@ class State {
     ArrayList<Variable> solvedVars; //Keeps track of the order the Variables are solved in
     boolean useCEP; //true if forward checking is to be used
 
-
-
-
-
     /**
      * Constructor for making a default {@code State}.
      */
-State() {
+public State() {
         this(new ArrayList<>(), new ArrayList<>(), false);
     }
 
@@ -46,8 +35,7 @@ State() {
      * @param cons List of Constraint Objects
      * @param useCEP true if forward checking is to be used
      */
-
-State(ArrayList<Variable> vars, ArrayList<Constraint> cons, boolean useCEP) {
+public State(ArrayList<Variable> vars, ArrayList<Constraint> cons, boolean useCEP) {
         this.vars = vars;
         this.cons = cons;
         this.useCEP = useCEP;
@@ -59,7 +47,7 @@ State(ArrayList<Variable> vars, ArrayList<Constraint> cons, boolean useCEP) {
      * Creates a copy of a given state.
      * @return copy of given state
      */
-State copyOf() {
+public State copyOf() {
         State copy = new State();
         for (Variable v : vars) {
             copy.vars.add(v.copyOf());
@@ -77,7 +65,7 @@ State copyOf() {
      * Checks to see if a given state is a solution
      * @return true if it is a solution
      */
-boolean isSolved() {
+public boolean isSolved() {
         for (Constraint c : cons) {
             //Check if a Variable on a Constraint does not yet have a chosen value
             if (!selected.containsKey(c.var1) || !selected.containsKey(c.var2)) {
@@ -294,4 +282,5 @@ public String toString() {
     }
 }
 
-#endif //CSP_SOLVER_STATE_H
+
+#endif //AIHW2_STATE_H
