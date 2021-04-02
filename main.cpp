@@ -1,143 +1,96 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Scanner;
+#include <cstring>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <memory>
+#include <fstream>
+#include "Variable.cpp"
+#include "Constraint.cpp"
+#include "State.h"
 
-/**
- * Main driver to test the classes
- */
-public class Driver {
-
-    int iteration; //Keeps track of which iteration the program is on
-
-    /**
-     * Perform pre-search setup.
-     * @param vars variables from .var file
-     * @param cons constraints from .con file
-     * @param useCEP flag for using forward checking
-     */
-public void go(ArrayList<Variable> vars, ArrayList<Constraint> cons, boolean useCEP) {
-        // Have variables keep track of how many constraints they belong to
-        // for least constraining variable
-        for (Constraint c : cons) {
-            for (Variable v : vars) {
-                if (c.var1 == v.var || c.var2 == v.var) {
+class Driver {
+private:
+    int iteration;
+public:
+    void go(std::vector<Variable> vars, std::vector<Constraint> cons, bool useCEP) {
+        for (const Constraint &c : cons) {
+            for (Variable &v : vars) {
+                if (c.var1 == v.var && c.var2 == v.var) {
                     v.numConstraints++;
                 }
             }
         }
-        iteration = 1;
-        solve(new State(vars, cons, useCEP));
+        iteration++;
+        solve(std::make_shared<State>(vars, cons, useCEP));
     }
 
-    /**
-     * Follows the Backtracking Search Algorithm to solve input.
-     * @param currState the current variable state
-     * @return true if the state is valid
-     */
-public boolean solve(State currState) {
-        // Check if current assignments satisfy all constraints
-        if (currState.isSolved()) {
-            // Limit to 30 iterations
+    bool solve(std::shared_ptr<State> currState) {
+        if (currState->isSolved()) {
             if (iteration <= 30) {
-                // Print solution
-                System.out.printf("%d. %s%n", iteration, currState);
+                std::cout << std::to_string(iteration) << ". " << currState->to_string() << std::endl;
                 return true;
             } else {
                 return false;
             }
         }
-
-        // Pick most constrained, most constraining, and earliest alphabetical variable
-        currState.selectNextVar();
-
-        // Check if forward checking failed
-        if (currState.failedFC()) {
-            // Limit to 30 iterations
+        currState->selectNextVar();
+        if (currState->failedFC()) {
             if (iteration <= 30) {
-                // Print failure
-                System.out.printf("%d. %s%n", iteration, currState);
+                std::cout << std::to_string(iteration) << ". " << currState->to_string() << std::endl;
                 iteration++;
             }
-            return false;
         }
-
-        // Try to set all values in order from least constraining to most constraining
-        for (int val : currState.getOrderedVals()) {
-            // Copy current state to make changes
-            State nextState = currState.copyOf();
-
-            // Set the chosen variable to val
-            nextState.setVar(val);
-
-            // Check consistency with current constraints
-            if (nextState.consistent()) {
+        for (int val : currState->getOrderedVals()) {
+            std::shared_ptr<State> nextState = currState->copyOf();
+            nextState->setVar(val);
+            if (nextState->consistent()) {
                 if (solve(nextState)) {
                     return true;
                 }
-            } else if (iteration <= 30) { // Limit to 30 iterations
-                // Print failure
-                System.out.printf("%d. %s%n", iteration, nextState);
+            } else if (iteration <= 30) {
+                std::cout << std::to_string(iteration) << ". " << currState->to_string() << std::endl;
                 iteration++;
             } else {
                 return false;
             }
         }
-
-        // None of the values worked, so current assignments are wrong
         return false;
     }
 
-    /**
-     * Parses the arguments from the command line.
-     * @param args the commandline arguments
-     */
-public static void main(String[] args) {
-        //Check if the number of arguments is valid
-        if (args.length != 3) {
-            System.err.println("Incorrect number of arguments.");
-            System.exit(1);
+    static void main(int argc, char *argv[]) {
+        if (argc != 4) {
+            std::cerr << "Incorrect number of arguments." << std::endl;
+            exit(1);
         }
-
-        String varFile = args[0]; //Retrieves the filename of the .var file
-        String conFile = args[1]; //Retrieves the filename of the .con file
-
-        ArrayList<Variable> vars = new ArrayList<>(); //Stores all of the information in the .var file
-        ArrayList<Constraint> cons = new ArrayList<>(); //Stores all of the information in the .con file
-        boolean useCEP; //True if a Consistence-Enforcing Procedure is going to be used
-
-
-        try {
-            //Get the information from the .var file
-            Scanner varin = new Scanner(new File(varFile));
-            while(varin.hasNextLine()) {
-                vars.add(new Variable(varin.nextLine().trim()));
+        std::string const varFile = argv[1];
+        std::string const conFile = argv[2];
+        std::vector<Variable> vars{};
+        std::vector<Constraint> cons{};
+        bool useCEP;
+        {
+            std::string line;
+            std::ifstream infile(varFile);
+            while (std::getline(infile, line)) {
+                vars.push_back(Variable(line));
             }
         }
-        catch (FileNotFoundException e) {
-            System.err.printf("Could not find file: %s%n", varFile);
-            System.exit(1);
-        }
-        try {
-            //Get the information from the .con file
-            Scanner conin = new Scanner(new File(conFile));
-            while(conin.hasNextLine()) {
-                cons.add(new Constraint(conin.nextLine().trim()));
+        {
+            std::string line;
+            std::ifstream infile(varFile);
+            while (std::getline(infile, line)) {
+                cons.push_back(Constraint(line));
             }
         }
-        catch (FileNotFoundException e) {
-            System.err.printf("Could not find file: %s%n", conFile);
-            System.exit(1);
+        if (strcmp(argv[3], "none") == 0) {
+            useCEP = false;
+        } else if (strcmp(argv[3], "fc") == 0) {
+            useCEP = true;
+        } else {
+            std::cerr << "Invalid flag " << argv[3];
+            exit(1);
         }
-
-        //Check if the third argument is valid
-        if (!args[2].equals("none") && !args[2].equals("fc")) {
-            System.err.printf("Invalid flag: %s%n", args[2]);
-            System.exit(1);
-        }
-        useCEP = args[2].equals("fc");
-
-        //Run the main program
-        new Driver().go(vars, cons, useCEP);
+        auto driver = std::make_shared<Driver>();
+        driver->go(vars, cons, useCEP);
     }
-}
+
+};
