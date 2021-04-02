@@ -2,60 +2,70 @@
 // Created by Frank Gao on 3/31/21.
 //
 
-#ifndef AIHW2_STATE_H
-#define AIHW2_STATE_H
+#ifndef CSP_SOLVER_STATE_H
+#define CSP_SOLVER_STATE_H
 
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
+#include <algorithm>
+#include <iostream>
+#include <unordered_map>
+#include "Constraint.h"
+#include "Variable.h"
+#include "string"
+using namespace std;
 
 /**
  * Holds the constraints and the current values/assignments for the variables.
  */
-public class State {
+class State {
 
-    ArrayList<Variable> vars; //Variable objects from input
-    ArrayList<Constraint> cons; //Constraint objects from input
-    HashMap<Character, Integer> selected; //Keeps track of which values have been chosen for a Variable
-    ArrayList<Variable> solvedVars; //Keeps track of the order the Variables are solved in
-    boolean useCEP; //true if forward checking is to be used
+public:
+    std::vector<Variable> vars;
+    std::vector<Constraint> cons;
+    std::unordered_map<std::wstring, int> selected;
+    std::vector<Variable> solvedVars;
+    bool useCEP;
 
     /**
      * Constructor for making a default {@code State}.
      */
-public State() {
-        this(new ArrayList<>(), new ArrayList<>(), false);
+State() {
+      //  this(new ArrayList<>(), new ArrayList<>(), false);
+        vars = {};
+        cons = {};
+        selected = {};
+        solvedVars = {};
+        useCEP = false;
     }
-
     /**
      * Constructor for making a starting {@code State}.
      * @param vars List of Variable Objects
      * @param cons List of Constraint Objects
      * @param useCEP true if forward checking is to be used
      */
-public State(ArrayList<Variable> vars, ArrayList<Constraint> cons, boolean useCEP) {
-        this.vars = vars;
-        this.cons = cons;
-        this.useCEP = useCEP;
-        selected = new HashMap<>();
-        solvedVars = new ArrayList<>();
-    }
+
+State(vector<Variable>& vars, vector<Constraint>& cons, bool useCEP) {
+        vars = vars;
+        cons = cons;
+        useCEP = useCEP;
+        selected = {};
+        solvedVars = {};
+    };
 
     /**
      * Creates a copy of a given state.
      * @return copy of given state
      */
-public State copyOf() {
-        State copy = new State();
+
+State copyOf() {
+        State copy = {};
         for (Variable v : vars) {
-            copy.vars.add(v.copyOf());
+            copy.vars.push_back(v.copyOf());
         }
         copy.cons = cons;
-        copy.selected.putAll(selected);
+        //copy.selected.putAll(selected);
+        copy.selected = selected;
         for (Variable v : solvedVars) {
-            copy.solvedVars.add(v.copyOf());
+            copy.solvedVars.push_back(v.copyOf());
         }
         copy.useCEP = useCEP;
         return copy;
@@ -65,14 +75,14 @@ public State copyOf() {
      * Checks to see if a given state is a solution
      * @return true if it is a solution
      */
-public boolean isSolved() {
+    bool isSolved() {
         for (Constraint c : cons) {
             //Check if a Variable on a Constraint does not yet have a chosen value
-            if (!selected.containsKey(c.var1) || !selected.containsKey(c.var2)) {
+            if (!selected.find(c.var1) || !selected.containsKey(c.var2)) {
                 return false;
             }
-            int val1 = selected.get(c.var1);
-            int val2 = selected.get(c.var2);
+            int val1 = selected.get( c.var1);
+            int val2 = selected.get( c.var2);
             //Check if the Constraint is satisfied, returns false if unsatisfied
             if (!c.valid(val1, val2)) {
                 return false;
@@ -84,33 +94,36 @@ public boolean isSolved() {
     /**
      * Sorts the Variables so the first one is the Variable to be chosen
      */
-public void selectNextVar() {
-        Collections.sort(vars);
+void selectNextVar() {
+        std::sort(vars.begin(), vars.end()+4);
     }
 
     /**
      * Checks if the current variable selection failed forward check.
      * @return true if failed forward check
      */
-public boolean failedFC() {
-        return vars.get(0).values.size() == 0;
+bool failedFC() {
+        return vars.at(0).values.size() == 0;
     }
+
 
     /**
      * Sorts the values of a given Variable so the best value is chosen
      * @return array of sorted values for a Variable
      */
-public int[] getOrderedVals() {
-        Variable nextVar = vars.get(0);
-        int[][] valPairs = new int[nextVar.values.size()][2];
+
+int* getOrderedVals(){
+        Variable nextVar = vars.at(0);
+        int valPairs[nextVar.values.size()][2];
+
         //Matrix which holds the values of a Variable paired with the total affected values if a value is chosen
-        for (int i = 0; i < valPairs.length; i++) {
-            valPairs[i][0] = nextVar.values.get(i);
+        for (int i = 0; i < sizeof(valPairs); i++) {
+            valPairs[i][0] = nextVar.values.at(i);
             valPairs[i][1] = getAffectedValues(nextVar, valPairs[i][0]);
         }
         //Lambda sort the pairs in increasing order by number of affected values
         Arrays.sort(valPairs, (one, two) -> one[1] - two[1]);
-        int[] orderedVals = new int[nextVar.values.size()];
+        int orderedVals[nextVar.values.size()];
         for (int i = 0; i < valPairs.length; i++) {
             orderedVals[i] = valPairs[i][0];
         }
@@ -165,21 +178,22 @@ private int getAffectedValues(Variable nextVar, int nextVal) {
      * Sets the next variable to {@code chosenVal} and updates constraints.
      * @param chosenVal chosen for a move
      */
-public void setVar(int chosenVal) {
+void setVar(int chosenVal) {
         // When forward checking, remove illegal values
         if (useCEP) {
             // Find constraints with the chosen variable
             for (Constraint c : cons) {
-                if (c.var1 == vars.get(0).var) {
+                if (c.var1 == vars.at(0).var) {
                     // Find variable it constrains
                     for (Variable v : vars) {
                         if (c.var2 == v.var) {
                             // Find illegal values and remove
                             int i = 0;
                             while (i < v.values.size()) {
-                                int val = v.values.get(i);
+                                int val = v.values.at(i);
                                 if (!c.valid(chosenVal, val)) {
-                                    v.values.remove(i);
+                                    //v.values.remove(i);
+                                    v.values.erase(i*);
                                 } else {
                                     i++;
                                 }
@@ -187,16 +201,16 @@ public void setVar(int chosenVal) {
                             break;
                         }
                     }
-                } else if (c.var2 == vars.get(0).var) {
+                } else if (c.var2 == vars.at(0).var) {
                     // Find variable it constrains
                     for (Variable v : vars) {
                         if (c.var1 == v.var) {
                             // Find illegal values and remove
                             int i = 0;
                             while (i < v.values.size()) {
-                                int val = v.values.get(i);
+                                int val = v.values.at(i);
                                 if (!c.valid(val, chosenVal)) {
-                                    v.values.remove(i);
+                                    v.values.erase(i);
                                 } else {
                                     i++;
                                 }
@@ -212,7 +226,7 @@ public void setVar(int chosenVal) {
         // do not need to keep track of those constraints for least
         // constraining variable
         for (Constraint c : cons) {
-            if (c.var1 == vars.get(0).var) {
+            if (c.var1 == vars.at(0).var) {
                 // Find variable the chosen variable constrains
                 for (Variable v : vars) {
                     if (c.var2 == v.var) {
@@ -220,7 +234,7 @@ public void setVar(int chosenVal) {
                         v.numConstraints--;
                     }
                 }
-            } else if (c.var2 == vars.get(0).var) {
+            } else if (c.var2 == vars.at(0).var) {
                 // Find variable the chosen variable constrains
                 for (Variable v : vars) {
                     if (c.var1 == v.var) {
@@ -232,16 +246,16 @@ public void setVar(int chosenVal) {
         }
 
         // Set variable to chosenVal
-        selected.put(vars.get(0).var,chosenVal);
-        solvedVars.add(vars.get(0));
-        vars.remove(0);
+        selected.find(vars.at(0).var,chosenVal);
+        solvedVars.push_back(vars.at(0));
+        vars.pop_back();
     }
 
     /**
      * Checks to see if a given state is consistent to all of the constraints
      * @return true if it is consistent
      */
-public boolean consistent() {
+bool consistent() {
         for (Constraint c : cons) {
             //If either variable in c is not set, move on
             if (!selected.containsKey(c.var1) || !selected.containsKey(c.var2)) {
@@ -249,8 +263,8 @@ public boolean consistent() {
             }
 
             //Check if constraint is valid
-            int val1 = selected.get(c.var1);
-            int val2 = selected.get(c.var2);
+            int val1 = selected.(c.var1);
+            int val2 = selected.find(c.var2);
             if (!c.valid(val1, val2)) {
                 return false;
             }
@@ -258,13 +272,11 @@ public boolean consistent() {
         return true;
     }
 
-    /**
-     * Gives the formatted output of the CSP
-     * @return String of given output
-     */
-public String toString() {
+
+     string toString() {
         StringBuilder sb = new StringBuilder();
-        boolean first = true;
+
+        bool first = true;
         for (Variable v : solvedVars) {
             if (!first) {
                 sb.append(", ");
@@ -282,5 +294,5 @@ public String toString() {
     }
 }
 
+#endif //CSP_SOLVER_STATE_H
 
-#endif //AIHW2_STATE_H
