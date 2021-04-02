@@ -1,2 +1,2 @@
-# Empty dependencies file for AIHW2.
+# Empty dependencies file for CSP_Solver.
 # This may be replaced when dependencies are built.

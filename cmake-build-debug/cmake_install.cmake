@@ -1,4 +1,4 @@
-# Install script for directory: /Users/frankgao/CLionProjects/AIHW2
+# Install script for directory: /Users/frankgao/CLionProjects/CSP-Solver
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/frankgao/CLionProjects/AIHW2/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/frankgao/CLionProjects/CSP-Solver/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

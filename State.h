@@ -2,60 +2,75 @@
 // Created by Frank Gao on 3/31/21.
 //
 
-#ifndef AIHW2_STATE_H
-#define AIHW2_STATE_H
+#ifndef CSP_SOLVER_STATE_H
+#define CSP_SOLVER_STATE_H
 
+#include <algorithm>
+#include <iostream>
+#include <unordered_map>
+#include "Constraint.h"
+#include "Variable.h"
+#include "string"
 
+/*
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashMap; */
 
 /**
  * Holds the constraints and the current values/assignments for the variables.
  */
-public class State {
+class State {
 
-    ArrayList<Variable> vars; //Variable objects from input
-    ArrayList<Constraint> cons; //Constraint objects from input
-    HashMap<Character, Integer> selected; //Keeps track of which values have been chosen for a Variable
-    ArrayList<Variable> solvedVars; //Keeps track of the order the Variables are solved in
-    boolean useCEP; //true if forward checking is to be used
+public:
+    std::vector<Variable> vars;
+    std::vector<Constraint> cons;
+    std::unordered_map<std::wstring, int> selected;
+    std::vector<Variable> solvedVars;
+    bool useCEP;
 
     /**
      * Constructor for making a default {@code State}.
      */
-public State() {
-        this(new ArrayList<>(), new ArrayList<>(), false);
+State() {
+      //  this(new ArrayList<>(), new ArrayList<>(), false);
+        vars = {};
+        cons = {};
+        selected = {};
+        solvedVars = {};
+        useCEP = false;
     }
-
     /**
      * Constructor for making a starting {@code State}.
      * @param vars List of Variable Objects
      * @param cons List of Constraint Objects
      * @param useCEP true if forward checking is to be used
      */
-public State(ArrayList<Variable> vars, ArrayList<Constraint> cons, boolean useCEP) {
-        this.vars = vars;
-        this.cons = cons;
-        this.useCEP = useCEP;
-        selected = new HashMap<>();
-        solvedVars = new ArrayList<>();
-    }
+
+State(vector<Variable>& vars, vector<Constraint>& cons, bool useCEP) {
+        vars = vars;
+        cons = cons;
+        useCEP = useCEP;
+        selected = {};
+        solvedVars = {};
+    };
 
     /**
      * Creates a copy of a given state.
      * @return copy of given state
      */
-public State copyOf() {
-        State copy = new State();
+
+State copyOf() {
+        State copy = {};
         for (Variable v : vars) {
-            copy.vars.add(v.copyOf());
+            copy.vars.push_back(v.copyOf());
         }
         copy.cons = cons;
-        copy.selected.putAll(selected);
+        //copy.selected.putAll(selected);
+        copy.selected = selected;
         for (Variable v : solvedVars) {
-            copy.solvedVars.add(v.copyOf());
+            copy.solvedVars.push_back(v.copyOf());
         }
         copy.useCEP = useCEP;
         return copy;
@@ -65,14 +80,14 @@ public State copyOf() {
      * Checks to see if a given state is a solution
      * @return true if it is a solution
      */
-public boolean isSolved() {
+    bool isSolved() {
         for (Constraint c : cons) {
             //Check if a Variable on a Constraint does not yet have a chosen value
-            if (!selected.containsKey(c.var1) || !selected.containsKey(c.var2)) {
+            if (!selected.contains(c.var1) || !selected.containsKey(c.var2)) {
                 return false;
             }
-            int val1 = selected.get(c.var1);
-            int val2 = selected.get(c.var2);
+            int val1 = selected.get( c.var1);
+            int val2 = selected.get( c.var2);
             //Check if the Constraint is satisfied, returns false if unsatisfied
             if (!c.valid(val1, val2)) {
                 return false;
@@ -84,24 +99,26 @@ public boolean isSolved() {
     /**
      * Sorts the Variables so the first one is the Variable to be chosen
      */
-public void selectNextVar() {
-        Collections.sort(vars);
+void selectNextVar() {
+        std::sort(vars.begin(), vars.end()+4);
     }
 
     /**
      * Checks if the current variable selection failed forward check.
      * @return true if failed forward check
      */
-public boolean failedFC() {
-        return vars.get(0).values.size() == 0;
+bool failedFC() {
+        return vars.at(0).values.size() == 0;
     }
+
 
     /**
      * Sorts the values of a given Variable so the best value is chosen
      * @return array of sorted values for a Variable
      */
-public int[] getOrderedVals() {
-        Variable nextVar = vars.get(0);
+
+int[] getOrderedVals() {
+        Variable nextVar = vars.at(0);
         int[][] valPairs = new int[nextVar.values.size()][2];
         //Matrix which holds the values of a Variable paired with the total affected values if a value is chosen
         for (int i = 0; i < valPairs.length; i++) {
@@ -241,7 +258,7 @@ public void setVar(int chosenVal) {
      * Checks to see if a given state is consistent to all of the constraints
      * @return true if it is consistent
      */
-public boolean consistent() {
+bool consistent() {
         for (Constraint c : cons) {
             //If either variable in c is not set, move on
             if (!selected.containsKey(c.var1) || !selected.containsKey(c.var2)) {
@@ -264,7 +281,7 @@ public boolean consistent() {
      */
 public String toString() {
         StringBuilder sb = new StringBuilder();
-        boolean first = true;
+        bool first = true;
         for (Variable v : solvedVars) {
             if (!first) {
                 sb.append(", ");
@@ -282,5 +299,4 @@ public String toString() {
     }
 }
 
-
-#endif //AIHW2_STATE_H
+#endif //CSP_SOLVER_STATE_H

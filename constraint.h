@@ -1,55 +1,67 @@
-#ifndef AIHW2_CONSTRAINT_H
-#define AIHW2_CONSTRAINT_H
-#include <string>
-using namespace std;
-class constraint {
-private:
-    char var1;
-    char var2;
-    char operat;
+//
+// Created by Frank Gao on 3/31/21.
+//
+
+#ifndef CSP_SOLVER_CONSTRAINT_H
+#define CSP_SOLVER_CONSTRAINT_H
+#include "strings.h"
+
+/**
+ * Object representation of a constraint.
+ */
+class Constraint {
 
 public:
-     //Constructor for making a default
-    constraint() {
+    char var1; //First Variable of the constraint
+    char var2; //Second Variable of the constraint
+    char opera; //Equality operator of the Variables
+
+
+    /**
+     * Constructor for making a default {@code Constraint}.
+     */
+     Constraint() {
         var1 = 'A';
         var2 = 'A';
-        operat = '=';
+        opera = '=';
     }
 
     /**
      * Constructor for making a new {@code Constraint}.
      */
-    constraint(string input) {
-        var1 = input.charAt(0);
-        var2 = input.charAt(4);
-        operat = input.charAt(2);
+    Constraint(const char* In) {
+        var1 = In[0];
+        opera = In[2];
+        var2 = In[4];
     }
 
     /**
      * Checks to see if a constraint works on a given pair of values
-     * @param val1 value of the first Variable
-     * @param val2 value of the second Variable
+     * @param Value_One value of the first Variable
+     * @param Value_Two value of the second Variable
      * @return true if the pair of values works under the constraint
      */
-bool valid(int val1, int val2) {
-        switch (operator) {
+bool valid(int Value_One, int Value_Two) {
+        switch (opera) {
                 case '<':
-                return val1 < val2;
+                return Value_One < Value_Two;
                 case '>':
-                return val1 > val2;
+                return Value_One > Value_Two;
                 case '!':
-                return val1 != val2;
+                return Value_One != Value_Two;
                 case '=':
-                return val1 == val2;
+                return Value_One == Value_Two;
         }
             return false;
+    };
+
+std::string to_string() const {
+        std::string s = std::to_string(static_cast<char>(var)) + ":";
+        for (const auto &item : values) {
+            s += " " + std::to_string(item);
+        }
+        return s;
     }
 
-string toString() {
-        return string.format("%c %c %c", var1, operat, var2);
-    }
 
-};
-
-
-#endif //AIHW2_CONSTRAINT_H
+#endif //CSP_SOLVER_CONSTRAINT_H
