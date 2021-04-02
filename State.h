@@ -11,12 +11,8 @@
 #include "Constraint.h"
 #include "Variable.h"
 #include "string"
-
-/*
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap; */
+#include <sstream>
+using namespace std;
 
 /**
  * Holds the constraints and the current values/assignments for the variables.
@@ -26,21 +22,22 @@ class State {
 public:
     std::vector<Variable> vars;
     std::vector<Constraint> cons;
-    std::unordered_map<std::wstring, int> selected;
+    std::unordered_map<std::string, int> selected;
     std::vector<Variable> solvedVars;
     bool useCEP;
 
     /**
      * Constructor for making a default {@code State}.
      */
-State() {
-      //  this(new ArrayList<>(), new ArrayList<>(), false);
+    State() {
+        //  this(new ArrayList<>(), new ArrayList<>(), false);
         vars = {};
         cons = {};
         selected = {};
         solvedVars = {};
         useCEP = false;
     }
+
     /**
      * Constructor for making a starting {@code State}.
      * @param vars List of Variable Objects
@@ -48,7 +45,7 @@ State() {
      * @param useCEP true if forward checking is to be used
      */
 
-State(vector<Variable>& vars, vector<Constraint>& cons, bool useCEP) {
+    State(vector<Variable> &vars, vector<Constraint> &cons, bool useCEP) {
         vars = vars;
         cons = cons;
         useCEP = useCEP;
@@ -61,7 +58,7 @@ State(vector<Variable>& vars, vector<Constraint>& cons, bool useCEP) {
      * @return copy of given state
      */
 
-State copyOf() {
+    State copyOf() {
         State copy = {};
         for (Variable v : vars) {
             copy.vars.push_back(v.copyOf());
@@ -83,11 +80,11 @@ State copyOf() {
     bool isSolved() {
         for (Constraint c : cons) {
             //Check if a Variable on a Constraint does not yet have a chosen value
-            if (!selected.contains(c.var1) || !selected.containsKey(c.var2)) {
-                return false;
-            }
-            int val1 = selected.get( c.var1);
-            int val2 = selected.get( c.var2);
+            /* if (!selected.find(c.var1) || !selected.find(c.var2)) {
+                 return false;
+             } */
+            int val1 = selected.at(c.var1);
+            int val2 = selected.at(c.var2);
             //Check if the Constraint is satisfied, returns false if unsatisfied
             if (!c.valid(val1, val2)) {
                 return false;
@@ -99,15 +96,15 @@ State copyOf() {
     /**
      * Sorts the Variables so the first one is the Variable to be chosen
      */
-void selectNextVar() {
-        std::sort(vars.begin(), vars.end()+4);
+    void selectNextVar() {
+        std::sort(vars.begin(), vars.end() + 4);
     }
 
     /**
      * Checks if the current variable selection failed forward check.
      * @return true if failed forward check
      */
-bool failedFC() {
+    bool failedFC() {
         return vars.at(0).values.size() == 0;
     }
 
@@ -117,18 +114,19 @@ bool failedFC() {
      * @return array of sorted values for a Variable
      */
 
-int[] getOrderedVals() {
+    int *getOrderedVals() {
         Variable nextVar = vars.at(0);
-        int[][] valPairs = new int[nextVar.values.size()][2];
+        int valPairs[nextVar.values.size()][2];
+
         //Matrix which holds the values of a Variable paired with the total affected values if a value is chosen
-        for (int i = 0; i < valPairs.length; i++) {
-            valPairs[i][0] = nextVar.values.get(i);
+        for (int i = 0; i < sizeof(valPairs); i++) {
+            valPairs[i][0] = nextVar.values.at(i);
             valPairs[i][1] = getAffectedValues(nextVar, valPairs[i][0]);
         }
         //Lambda sort the pairs in increasing order by number of affected values
-        Arrays.sort(valPairs, (one, two) -> one[1] - two[1]);
-        int[] orderedVals = new int[nextVar.values.size()];
-        for (int i = 0; i < valPairs.length; i++) {
+        //std::sort(valPairs, (one, two) -> one[1] - two[1]);
+        int orderedVals[nextVar.values.size()];
+        for (int i = 0; i < sizeof(valPairs); i++) {
             orderedVals[i] = valPairs[i][0];
         }
         return orderedVals;
@@ -140,7 +138,7 @@ int[] getOrderedVals() {
      * @param nextVal integer of the value chosen
      * @return integer of total affected values
      */
-private int getAffectedValues(Variable nextVar, int nextVal) {
+    int getAffectedValues(Variable nextVar, int nextVal) {
         int numAffected = 0;
         //Runs through all Constraints
         for (Constraint c : cons) {
@@ -182,21 +180,23 @@ private int getAffectedValues(Variable nextVar, int nextVal) {
      * Sets the next variable to {@code chosenVal} and updates constraints.
      * @param chosenVal chosen for a move
      */
-public void setVar(int chosenVal) {
+    void setVar(int chosenVal) {
         // When forward checking, remove illegal values
         if (useCEP) {
             // Find constraints with the chosen variable
             for (Constraint c : cons) {
-                if (c.var1 == vars.get(0).var) {
+                if (c.var1 == vars.at(0).var) {
                     // Find variable it constrains
                     for (Variable v : vars) {
                         if (c.var2 == v.var) {
                             // Find illegal values and remove
                             int i = 0;
                             while (i < v.values.size()) {
-                                int val = v.values.get(i);
+                                int val = v.values.at(i);
                                 if (!c.valid(chosenVal, val)) {
-                                    v.values.remove(i);
+                                    //v.values.remove(i);
+                                    //  v.values.erase(i);
+
                                 } else {
                                     i++;
                                 }
@@ -204,16 +204,17 @@ public void setVar(int chosenVal) {
                             break;
                         }
                     }
-                } else if (c.var2 == vars.get(0).var) {
+                } else if (c.var2 == vars.at(0).var) {
                     // Find variable it constrains
                     for (Variable v : vars) {
                         if (c.var1 == v.var) {
                             // Find illegal values and remove
                             int i = 0;
                             while (i < v.values.size()) {
-                                int val = v.values.get(i);
+                                int val = v.values.at(i);
                                 if (!c.valid(val, chosenVal)) {
-                                    v.values.remove(i);
+                                    //  v.values.erase(i);
+                                    v.values.erase(i);
                                 } else {
                                     i++;
                                 }
@@ -229,7 +230,7 @@ public void setVar(int chosenVal) {
         // do not need to keep track of those constraints for least
         // constraining variable
         for (Constraint c : cons) {
-            if (c.var1 == vars.get(0).var) {
+            if (c.var1 == vars.at(0).var) {
                 // Find variable the chosen variable constrains
                 for (Variable v : vars) {
                     if (c.var2 == v.var) {
@@ -237,7 +238,7 @@ public void setVar(int chosenVal) {
                         v.numConstraints--;
                     }
                 }
-            } else if (c.var2 == vars.get(0).var) {
+            } else if (c.var2 == vars.at(0).var) {
                 // Find variable the chosen variable constrains
                 for (Variable v : vars) {
                     if (c.var1 == v.var) {
@@ -249,25 +250,25 @@ public void setVar(int chosenVal) {
         }
 
         // Set variable to chosenVal
-        selected.put(vars.get(0).var,chosenVal);
-        solvedVars.add(vars.get(0));
-        vars.remove(0);
+        selected.set(vars.at(0).var, chosenVal);
+        solvedVars.push_back(vars.at(0));
+        vars.pop_back();
     }
 
     /**
      * Checks to see if a given state is consistent to all of the constraints
      * @return true if it is consistent
      */
-bool consistent() {
+    bool consistent() {
         for (Constraint c : cons) {
             //If either variable in c is not set, move on
-            if (!selected.containsKey(c.var1) || !selected.containsKey(c.var2)) {
-                continue;
-            }
+            /*    if (!selected.find(c.var1) || !selected.find(c.var2)) {
+                    continue;
+                } */
 
             //Check if constraint is valid
-            int val1 = selected.get(c.var1);
-            int val2 = selected.get(c.var2);
+            int val1 = selected.at(c.var1);
+            int val2 = selected.at(c.var2);
             if (!c.valid(val1, val2)) {
                 return false;
             }
@@ -275,19 +276,17 @@ bool consistent() {
         return true;
     }
 
-    /**
-     * Gives the formatted output of the CSP
-     * @return String of given output
-     */
-public String toString() {
-        StringBuilder sb = new StringBuilder();
+/*
+     std::string toString() {
+        std::stringstream sb;
+
         bool first = true;
         for (Variable v : solvedVars) {
             if (!first) {
                 sb.append(", ");
             }
             first = false;
-            sb.append(v.var).append("=").append(selected.get(v.var));
+            sb.append(v.var).append("=").append(selected.find(v.var));
         }
         sb.append("  ");
         if (isSolved()) {
@@ -297,6 +296,7 @@ public String toString() {
         }
         return sb.toString();
     }
-}
+} */
 
+}
 #endif //CSP_SOLVER_STATE_H

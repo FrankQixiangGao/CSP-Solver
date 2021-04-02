@@ -4,7 +4,9 @@
 
 #ifndef CSP_SOLVER_CONSTRAINT_H
 #define CSP_SOLVER_CONSTRAINT_H
-#include "strings.h"
+#include <cstring>
+#include <cstdlib>
+#include <iostream>
 
 /**
  * Object representation of a constraint.
@@ -12,8 +14,8 @@
 class Constraint {
 
 public:
-    char var1; //First Variable of the constraint
-    char var2; //Second Variable of the constraint
+    std::string var1; //First Variable of the constraint
+    std::string var2; //Second Variable of the constraint
     char opera; //Equality operator of the Variables
 
 
@@ -42,7 +44,7 @@ public:
      * @return true if the pair of values works under the constraint
      */
 bool valid(int Value_One, int Value_Two) {
-        switch (opera) {
+        switch(opera) {
                 case '<':
                 return Value_One < Value_Two;
                 case '>':
@@ -52,16 +54,11 @@ bool valid(int Value_One, int Value_Two) {
                 case '=':
                 return Value_One == Value_Two;
         }
-            return false;
-    };
+        return false;
+}
 
-std::string to_string() const {
-        std::string s = std::to_string(static_cast<char>(var)) + ":";
-        for (const auto &item : values) {
-            s += " " + std::to_string(item);
-        }
-        return s;
-    }
+std::string toString() {
+    std::cout << var1 << opera << var2;
+}
 
-
-#endif //CSP_SOLVER_CONSTRAINT_H
+#endif //CSP_SOLVER_MAIN_H

@@ -12,7 +12,7 @@ using namespace std;
 
 class Variable {
 public:
-    int var;
+    basic_string<char, char_traits<char>, allocator<char>> var;
     std::vector<int> values;
     int numConstraints;
 
